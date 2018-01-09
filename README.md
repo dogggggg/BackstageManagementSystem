@@ -1,5 +1,4 @@
-# BackstageManagementSystem
-后台管理系统
+# 后台管理系统
 
 JAVA后台管理系统框架
 <br/>
