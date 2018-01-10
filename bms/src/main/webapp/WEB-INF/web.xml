@@ -7,7 +7,7 @@
 	<!-- Spring和mybatis的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-mybatis.xml</param-value>
+		<param-value>classpath:/spring/spring-mybatis.xml</param-value>
 	</context-param>
 	<!-- 编码过滤器 -->
 	<filter>
@@ -23,6 +23,11 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!-- log4j2日志监听器 -->
+	<listener>
+		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+	</listener>
 	<!-- Spring监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -31,6 +36,14 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
+	<!-- 请求上下文监听器 -->
+	<listener>
+		<listener-class>com.hab.bms.sys.common.RequestContextListener</listener-class>
+	</listener>
+	<!-- 系统初始化监听 -->
+	<listener>
+		<listener-class>com.hab.bms.sys.init.SystemInitListener</listener-class>
+	</listener>
 
 	<!-- Spring MVC servlet -->
 	<servlet>
@@ -38,7 +51,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring-mvc.xml</param-value>
+			<param-value>classpath:/spring/webmvc-config.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
@@ -46,7 +59,7 @@
 	<servlet-mapping>
 		<servlet-name>SpringMVC</servlet-name>
 		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
-		<url-pattern>/</url-pattern>
+		<url-pattern>/bms</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>/index.jsp</welcome-file>
