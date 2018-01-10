@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 系统管理 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager" />
+	<bean id="ehCacheManagerFactory"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:config/data-ehcache.xml" />
+	</bean>
+	<bean id="sessionDAO"
+		class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionIdCookie.name" value="jssid" />
+		<property name="sessionIdCookie.maxAge" value="-1" />
+		<property name="sessionIdCookie.path" value="/" />
+	</bean>
+	<bean id="systemUserRealm" class="com.hab.bms.sys.shiro.realm.SysUserRealm"
+		p:name="systemUserRealm" p:credentialsMatcher-ref="credentialsMatcher" />
+	<bean id="systemUserSecurityManager" class="com.hab.bms.sys.shiro.mgt.CustomWebSecurityManager">
+		<!-- cacheManager -->
+		<property name="cacheManager" ref="cacheManager" />
+		<!-- sessionManager -->
+		<property name="sessionManager" ref="sessionManager" />
+		<property name="authenticator">
+			<bean
+				class="com.hab.bms.sys.shiro.authc.pam.SingleSupportModularRealmAuthenticator">
+				<property name="authenticationStrategy">
+					<bean
+						class="com.hab.bms.sys.shiro.authc.pam.CustomAuthenticationStrategy" />
+				</property>
+			</bean>
+		</property>
+		<property name="realms">
+			<list>
+				<ref bean="systemUserRealm" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="systemUserSecurityManager" />
+		<property name="loginUrl" value="http://bms.cn/manage/page/login.html" />
+		<property name="successUrl" value="http://bms.cn/manage/page/index.html" />
+		<property name="unauthorizedUrl" value="http://bms.cn/manage/page/login.html" />
+		<property name="filters">
+			<util:map>
+				<!-- 配置这个filter是为了让那些还没有登录的请求跳转到loginUrl去进行登录 -->
+				<entry key="authc">
+					<!-- <bean class="org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter" 
+						/> -->
+					<bean
+						class="com.hab.bms.sys.shiro.filter.PassThruAuthenticationWithGotoFilter">
+						<property name="loginUrl" value="/page/login" />
+					</bean>
+				</entry>
+			</util:map>
+		</property>
+		<property name="filterChainDefinitions">
+			<!-- /doLogin.htm = anon 表示/doLogin.htm匹配的请求属于匿名请求，允许那些还没有登录的用户访问 /err.htm 
+				= authc 表示/err.htm匹配的请求需要已经验证登录成功的用户访问，否则跳转到登录页面loginUrl进行登录 -->
+			<value>
+				/mobile/** = anon
+				/login/** = anon
+				/upload/** = anon
+				/**/*.js =
+				anon
+				/page/login = anon
+				/static/** = anon
+				/**/getCode = anon
+				/**/test.html = anon
+				/**/login = anon
+				/**/ajaxlogin = anon
+				/file/manage/** = anon
+				/wf/** = anon
+				/workflow/** = anon
+				/** = authc
+				/wf_api/** = anon
+			</value>
+		</property>
+	</bean>
+
+</beans>
