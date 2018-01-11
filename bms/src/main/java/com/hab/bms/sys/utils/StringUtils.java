@@ -1,6 +1,6 @@
 package com.hab.bms.sys.utils;
 
-public class StringUtils extends org.apache.commons.lang3.StringUtils {
+public class StringUtils extends StrUtil {
 
 	/**
 	 * Check that the given {@code CharSequence} is neither {@code null} nor
@@ -33,5 +33,4 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	public static boolean hasLength(String str) {
 		return hasLength((CharSequence) str);
 	}
-
 }

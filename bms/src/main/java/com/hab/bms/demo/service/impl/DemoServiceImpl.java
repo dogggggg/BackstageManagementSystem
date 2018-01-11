@@ -10,7 +10,7 @@ import com.hab.bms.demo.model.Demo;
 import com.hab.bms.demo.mysqlmapper.DemoMapper;
 import com.hab.bms.demo.service.DemoService;
 
-@Service("demoService")
+@Service
 public class DemoServiceImpl implements DemoService {
 	private static Logger logger = LogManager.getLogger(DemoServiceImpl.class);
 	@Autowired
