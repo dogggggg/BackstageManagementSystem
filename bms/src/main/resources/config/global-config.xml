@@ -19,6 +19,10 @@
 		</property>
 	</bean>
 	
+    <bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+    <!-- Some Url Mapping -->
+    <bean name="/page/login" class="com.hab.bms.sys.common.camouflage.BeanNameUrlHandlerMappingController" />
+    
 	<!-- Spring和mybatis的配置文件 -->
 	<import resource="classpath:spring/spring-mybatis.xml" />
 	<!-- Shiro的配置文件 -->

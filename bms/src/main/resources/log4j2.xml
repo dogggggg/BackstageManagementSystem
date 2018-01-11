@@ -25,6 +25,7 @@
 	</Appenders>
 
 	<Loggers>
+		<logger name="org.quartz" level="ERROR" />
 		<logger name="org.springframework" level="ERROR" />
 		<logger name="org.springframework.orm.jpa" level="ERROR" />
 		<logger name="org.springframework.transaction" level="ERROR" />

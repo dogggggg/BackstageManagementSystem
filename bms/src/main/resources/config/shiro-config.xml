@@ -74,10 +74,10 @@
 		<property name="sessionDAO" ref="sessionDAO" />
 		<property name="sessionIdCookieEnabled" value="true" />
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
-		<property name="sessionListeners" ref="sessionListener1" />
+		<property name="sessionListeners" ref="sessionListener" />
 	</bean>
 	<!-- 监听会话 -->
-	<bean id="sessionListener1" class="com.hab.bms.sys.shiro.util.MySessionListener1"></bean>
+	<bean id="sessionListener" class="com.hab.bms.sys.shiro.util.MySessionListener"></bean>
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="userRealm" />
