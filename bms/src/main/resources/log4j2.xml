@@ -30,28 +30,18 @@
 	</Appenders>
 
 	<Loggers>
-<<<<<<< HEAD
-<!-- 		<logger name="org.quartz" level="ERROR" /> -->
-<!-- 		<logger name="org.springframework" level="ERROR" /> -->
-<!-- 		<logger name="org.springframework.orm.jpa" level="ERROR" /> -->
-<!-- 		<logger name="org.springframework.transaction" level="ERROR" /> -->
-<!-- 		<logger name="org.apache.shiro" level="ERROR" /> -->
-<!-- 		<logger name="org.apache.shiro.cache.ehcache" level="ERROR" /> -->
-<!-- 		<logger name="net.sf.ehcache" level="ERROR" /> -->
-<!-- 		<logger name="org.mybatis.spring" level="ERROR" /> -->
-<!-- 		<logger name="com.hab" level="DEBUG" /> -->
-		<Root level="all">
-=======
 		<logger name="org.quartz" level="ERROR" />
 		<logger name="org.springframework" level="ERROR" />
 		<logger name="org.springframework.orm.jpa" level="ERROR" />
 		<logger name="org.springframework.transaction" level="ERROR" />
+<!-- 		<logger name="org.apache.shiro" level="ERROR" /> -->
+		<logger name="org.apache.shiro.cache.ehcache" level="ERROR" />
+		<logger name="net.sf.ehcache" level="ERROR" />
 		<logger name="org.mybatis.spring" level="ERROR" />
 		<logger name="com.hab" level="DEBUG" />
-		<Root level="trace">
->>>>>>> ec37d9860b200ea60fc48bd725857666cca8d1b3
+		<Root level="all">
 			<AppenderRef ref="Console" />
-<!-- 			<AppenderRef ref="TestLogFile" /> -->
+			<AppenderRef ref="TestLogFile" />
 			<AppenderRef ref="RollingFile" />
 		</Root>
 	</Loggers>

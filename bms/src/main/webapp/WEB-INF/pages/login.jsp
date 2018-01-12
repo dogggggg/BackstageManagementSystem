@@ -22,9 +22,10 @@
 <body>
 	<div class="page-container">
 		<h1>Login</h1>
-		<form id="loginForm">
-			<input type="text" id="login_id" name="login_id" class="username" placeholder="Username" value=1> 
-			<input type="password" id="password" name="password" class="password" placeholder="Password" value=1>
+		<form id="loginForm" method="post" id="form" action="${ctx}/loginTest">
+			<input type="text" id="userName" name="username" class="username" placeholder="Username" value=1> 
+			<input type="password" id="pwd" name="password" class="password" placeholder="Password" value=1>
+            <label><input type="checkbox" name="rememberMe"/> RemeberMe</label>  
 			<button type="submit" id="btn_login">Sign me in</button>
 			<div class="error">
 				<span>+</span>

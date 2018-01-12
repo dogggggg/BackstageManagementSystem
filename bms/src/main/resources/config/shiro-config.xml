@@ -103,7 +103,7 @@
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="kickoutAfter" value="false" />
 		<property name="maxSession" value="2" />
-		<property name="kickoutUrl" value="/login?kickout=1" />
+		<property name="kickoutUrl" value="/page/login?kickout=1" />
 	</bean>
 	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
 	<bean
@@ -119,7 +119,7 @@
 		<property name="usernameParam" value="username" />
 		<property name="passwordParam" value="password" />
 		<property name="rememberMeParam" value="rememberMe" />
-		<property name="loginUrl" value="/login" />
+		<property name="loginUrl" value="/page/login" />
 	</bean>
 	<!-- <bean id="passThruAuthenticationFilter" -->
 	<!-- class="com.hab.bms.sys.shiro.util.PassThruAuthenticationWithGotoFilter"> -->

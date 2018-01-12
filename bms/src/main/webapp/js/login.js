@@ -8,6 +8,7 @@ kdm.nameSpace.reg("sys");
     sys.login = function(){
 
         var ctxData = kdm.utils.getServerPath("system");
+        
         var isValidate='1';
         // 申明内部对象
         var obj = this;
@@ -64,6 +65,13 @@ kdm.nameSpace.reg("sys");
             var pwdResult =  $("#password").val();
 
             $("#loginForm").html5Validate(function() {
+            	
+
+                document.getElementById("loginForm").submit();  
+                
+                return ;
+                
+                
                 var rmb_m = $("#rmb_m").is(":checked");
                 //登录之后的跳转页面
                 var redirect = kdm.utils.getServerPath("domain") + "/page/index";
@@ -75,10 +83,13 @@ kdm.nameSpace.reg("sys");
                 loginParam.pass_wd = pwdResult;
                 //loginParam.goto = redirect;
                 loginParam.is_aes = -1;
+                var xxxurl = ctxData + "/loginTest?username="+loginParam.login_id
+            	+"&password="+loginParam.pass_wd+"&rememberMe="+loginParam.rmb_m;
                 $.ajax({
 //                    "url": ctxData + "/system/ajaxlogin?date=" + new Date().getTime() ,
-                    "url": ctxData + "/demo/showDemo?date=" + new Date().getTime() ,
-//                    "data" : loginParam,
+//                    "url": ctxData + "/demo/showDemo?date=" + new Date().getTime() ,
+                    "url": xxxurl,
+                    "data" : loginParam,
                     "success": function(retData){
                     	alert(0);
                         // 登录成功
@@ -99,8 +110,9 @@ kdm.nameSpace.reg("sys");
                     "error": function(XMLHttpRequest, textStatus, errorThrown){
                     	alert(XMLHttpRequest.status+":"+errorThrown);
                     },
-//                    "dataType": "jsonp",
-//                    "cache": false
+                    "dataType": "json",
+                    "type" : "get",
+                    "cache": false
                 });
             }, {
                 validate : function() {
