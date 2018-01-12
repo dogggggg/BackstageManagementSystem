@@ -17,7 +17,6 @@ kdm.nameSpace.reg("sys");
             if(window.parent.location.href != window.location.href){
                 window.parent.location.href = window.location.href;
             }
-            obj.initHtml();
             $.ajax({
                 "url": ctxData + '/system/getIsValidate?date='+ new Date().getTime(),
                 "async":false,
@@ -77,26 +76,31 @@ kdm.nameSpace.reg("sys");
                 //loginParam.goto = redirect;
                 loginParam.is_aes = -1;
                 $.ajax({
-                    "url": ctxData + "/system/ajaxlogin?date=" + new Date().getTime() ,
-                    "data" : loginParam,
+//                    "url": ctxData + "/system/ajaxlogin?date=" + new Date().getTime() ,
+                    "url": ctxData + "/demo/showDemo?date=" + new Date().getTime() ,
+//                    "data" : loginParam,
                     "success": function(retData){
+                    	alert(0);
                         // 登录成功
-                        if (retData.status == "0") {
-                            if(redirect !== null || redirect != undefined){
-                                window.location.href = unescape(redirect);
-                            }else{
-                                window.location.href = kdm.utils.getServerPath("domain") + "/page/index";
-                            }
-                        } else {// 提示信息
-                            $("#login_msg").html("*"+retData.msg);
-//                            kdm.win.alert(retData.msg,retData.status);
-                            obj.getValidateCodeFun();
-                            $("#validateCode").focus();
-                            $("#validateCode").select()
-                        }
+//                        if (retData.status == "0") {
+//                            if(redirect !== null || redirect != undefined){
+//                                window.location.href = unescape(redirect);
+//                            }else{
+//                                window.location.href = kdm.utils.getServerPath("domain") + "/page/index";
+//                            }
+//                        } else {// 提示信息
+//                            $("#login_msg").html("*"+retData.msg);
+////                            kdm.win.alert(retData.msg,retData.status);
+//                            obj.getValidateCodeFun();
+//                            $("#validateCode").focus();
+//                            $("#validateCode").select()
+//                        }
                     },
-                    "dataType": "jsonp",
-                    "cache": false
+                    "error": function(XMLHttpRequest, textStatus, errorThrown){
+                    	alert(XMLHttpRequest.status+":"+errorThrown);
+                    },
+//                    "dataType": "jsonp",
+//                    "cache": false
                 });
             }, {
                 validate : function() {
@@ -124,21 +128,6 @@ kdm.nameSpace.reg("sys");
                     return true;
                 }
             });
-        };
-        this.initHtml = function(){
-			var ttlWidth = $(window).width(), ttlHeight = $(window).height();
-			var perW = function(width){return (width * ttlWidth / 1024)}, perH = function(height){return (height * ttlHeight / 768)};
-			var w = perW(40) , h = perH(30), h2 = perH(100);
-			$("#row-1-1").attr('style', 'height: ' + h2 + 'px; ');
-//			$("#row-1-1").html('<img src="../static/images/bg_r1_v2.png" hspace=' + w + 'px vspace=' + h + 'px>');
-			$("#row-1-1").html('<img src="../static/images/bg_r1_v2.png" hspace=' + w + 'px vspace=30px height='+(40*h2/100)+'px>');
-			w = perW(1024)-300, h = perH(568);
-			$("#row-2-1").attr('style', 'height: ' + h + 'px; width: ' + w + 'px;');
-			for (b = 180; b < h; b += 180)
-				$("#row-2-2-block").append('<br>');
-			$("#row-2-2-2").html('<img src="../static/images/bg_r2_1_1.png" >');
-			w = perW(1024), h = perH(100);
-			$("#row-3").attr('style', 'height: ' + h + 'px; width: ' + w + 'px;');
         };
     };
 

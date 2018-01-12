@@ -8,7 +8,7 @@
 
 	<properties>
 		<!-- spring版本号 -->
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.3.2.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.6</mybatis.version>
 		<mybatis.ehcache.version>1.0.0</mybatis.ehcache.version>
@@ -70,6 +70,11 @@
 
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
@@ -78,6 +83,20 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+        <!-- start要使用spring的aop,要么引入aspectj,要么cglib -->  
+		<dependency>  
+            <groupId>org.aspectj</groupId>  
+            <artifactId>aspectjweaver</artifactId>  
+            <version>1.6.11</version>  
+            <type>jar</type>  
+            <scope>compile</scope>  
+        </dependency>  
+        <dependency>  
+            <groupId>cglib</groupId>  
+            <artifactId>cglib</artifactId>  
+            <version>3.2.4</version>  
+        </dependency> 
+        <!-- end要使用spring的aop,要么引入aspectj,要么cglib -->   
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -246,11 +265,11 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons.lang3.version}</version>
 		</dependency>
-        <dependency>  
-        <groupId>commons-collections</groupId>  
-            <artifactId>commons-collections</artifactId>  
-            <version>3.2.1</version>  
-        </dependency> 
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 		<!-- utils end -->
 
 		<!-- web start -->
