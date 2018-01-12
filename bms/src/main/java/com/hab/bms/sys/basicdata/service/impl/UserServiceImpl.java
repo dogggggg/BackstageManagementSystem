@@ -23,13 +23,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByLoginId(String loginId) {
-		if(1==1) return null;
 		return userMapper.queryUserByLoginId(loginId);
 	}
 
 	@Override
 	public Set<String> findRoles(String id) {
-		if(1==1) return null;
 		List<Role> roleList = userMapper.queryUserRoleById(id);
 		Set<String> roleSet = new HashSet<String>();
 		for (Role role : roleList) {
@@ -42,7 +40,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Set<String> findPermissions(String id) {
-		if(1==1) return null;
 		List<Role> roleList = userMapper.queryUserRoleById(id);
 		Set<String> permissionSet = new HashSet<String>();
 		for (Role role : roleList) {
@@ -57,7 +54,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int save(User user) {
-		if(1==1) return 0;
 	    User u=new PasswordHelper().encryptPassword(user);  
 	    return userMapper.save(u);  
 	}

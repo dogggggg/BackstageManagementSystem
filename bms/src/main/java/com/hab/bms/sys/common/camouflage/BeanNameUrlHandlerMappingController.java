@@ -18,7 +18,11 @@ public class BeanNameUrlHandlerMappingController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView(StrUtil.substringAfterLast(requestUri, "/"));
 		modelAndView.addObject("uri", requestUri);
 
+<<<<<<< HEAD
+		return modelAndView;
+=======
 		return new ModelAndView("login");
+>>>>>>> ec37d9860b200ea60fc48bd725857666cca8d1b3
 	}
 
 }
