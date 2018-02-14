@@ -24,14 +24,9 @@ public class PassThruAuthenticationWithGotoFilter extends PassThruAuthentication
 	private static final Logger logger = LogManager.getLogger(PassThruAuthenticationWithGotoFilter.class);
 
 	/** 个人用户登陆页面 */
-	private String personalLoginUrl;
-
-	/** 系统用户登陆页面 */
-	private String systemLoginUrl;
+	private String defaultLoginUrl;
 
 	private final static String GO_TO_PARAM_PREFIX = WebConstants.GO_TO + "=";
-
-	private final static String SYSTEM_URL_KEYWORD = "sys";
 
 	@Override
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -89,13 +84,13 @@ public class PassThruAuthenticationWithGotoFilter extends PassThruAuthentication
 	 * @throws UnsupportedEncodingException
 	 */
 	private String getRedirectUrl(ServletRequest request, String gotoUrl) throws UnsupportedEncodingException {
-		String loginUrl = getLoginUrl(request, gotoUrl);
-		if (loginUrl.endsWith("\\?")) {
-			return loginUrl + GO_TO_PARAM_PREFIX + gotoUrl;
-		} else if (loginUrl.contains("\\?")) {
-			return loginUrl + "&" + GO_TO_PARAM_PREFIX + gotoUrl;
+		String defaultLoginUrl = getLoginUrl(request, gotoUrl);
+		if (defaultLoginUrl.endsWith("\\?")) {
+			return defaultLoginUrl + GO_TO_PARAM_PREFIX + gotoUrl;
+		} else if (defaultLoginUrl.contains("\\?")) {
+			return defaultLoginUrl + "&" + GO_TO_PARAM_PREFIX + gotoUrl;
 		} else {
-			return loginUrl + "?" + GO_TO_PARAM_PREFIX + gotoUrl;
+			return defaultLoginUrl + "?" + GO_TO_PARAM_PREFIX + gotoUrl;
 		}
 	}
 
@@ -107,46 +102,11 @@ public class PassThruAuthenticationWithGotoFilter extends PassThruAuthentication
 	 * @return
 	 */
 	public String getLoginUrl(ServletRequest request, String gotoUrl) {
-		if (isSystemPath(request)) {
-			return this.systemLoginUrl == null ? super.getLoginUrl() : this.systemLoginUrl;
-		}
-
-		return this.personalLoginUrl == null ? super.getLoginUrl() : this.personalLoginUrl;
+		return this.defaultLoginUrl == null ? super.getLoginUrl() : this.defaultLoginUrl;
 	}
 
-	/**
-	 * 判断用户的意图，是否要去一个系统连接
-	 * 判断依据是域名或者contextPath是否带有{@linkplain PassThruAuthenticationWithGotoFilter#SYSTEM_URL_KEYWORD
-	 * SYSTEM_URL_KEYWORD}字样
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private boolean isSystemPath(ServletRequest request) {
-		HttpServletRequest httpRequest = WebUtils.toHttp(request);
-		String serverName = httpRequest.getServerName();
-		String ctxPath = httpRequest.getContextPath();
-		return (serverName.contains(SYSTEM_URL_KEYWORD) || ctxPath.contains(SYSTEM_URL_KEYWORD));
-	}
-
-	/**
-	 * Setter method for property <tt>personalLoginUrl</tt>.
-	 * 
-	 * @param personalLoginUrl
-	 *            value to be assigned to property personalLoginUrl
-	 */
-	public void setPersonalLoginUrl(String personalLoginUrl) {
-		this.personalLoginUrl = personalLoginUrl;
-	}
-
-	/**
-	 * setter method
-	 * 
-	 * @param systemLoginUrl
-	 *            the systemLoginUrl to set
-	 */
-	public void setSystemLoginUrl(String systemLoginUrl) {
-		this.systemLoginUrl = systemLoginUrl;
+	public void setDefaultLoginUrl(String defaultLoginUrl) {
+		this.defaultLoginUrl = defaultLoginUrl;
 	}
 
 }

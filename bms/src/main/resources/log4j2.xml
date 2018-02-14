@@ -9,7 +9,7 @@
 	</Properties>
 	<Appenders>
 		<!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用 -->
-		<File name="TestLogFile" fileName=".logs/test.log" append="false">
+		<File name="TestLogFile" fileName=".logs/log4j2Test.log" append="false">
 			<PatternLayout
 				pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
 		</File>
@@ -31,17 +31,22 @@
 
 	<Loggers>
 <!-- 		<logger name="org.quartz" level="ERROR" /> -->
+<!-- 		<logger name="com.alibaba.druid" level="ERROR" /> -->
+<!-- 		<logger name="com.alibaba.dubbo" level="ERROR" /> -->
 <!-- 		<logger name="org.springframework" level="ERROR" /> -->
 <!-- 		<logger name="org.springframework.orm.jpa" level="ERROR" /> -->
 <!-- 		<logger name="org.springframework.transaction" level="ERROR" /> -->
 <!-- 		<logger name="org.apache.shiro" level="ERROR" /> -->
 <!-- 		<logger name="org.apache.shiro.cache.ehcache" level="ERROR" /> -->
-<!-- 		<logger name="net.sf.ehcache" level="ERROR" /> -->
+<!-- 		<logger name="org.apache.ibatis" level="ERROR" /> -->
 <!-- 		<logger name="org.mybatis.spring" level="ERROR" /> -->
-<!-- 		<logger name="com.hab" level="DEBUG" /> -->
+<!-- 		<logger name="org.activiti.engine" level="ERROR" /> -->
+<!-- 		<logger name="org.hibernate.validator" level="ERROR" /> -->
+<!-- 		<logger name="net.sf.ehcache" level="ERROR" /> -->
+		<logger name="com.hab" level="DEBUG" />
 		<Root level="all">
 			<AppenderRef ref="Console" />
-<!-- 			<AppenderRef ref="TestLogFile" /> -->
+			<AppenderRef ref="TestLogFile" />
 			<AppenderRef ref="RollingFile" />
 		</Root>
 	</Loggers>

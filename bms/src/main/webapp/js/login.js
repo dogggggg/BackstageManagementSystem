@@ -77,30 +77,30 @@ kdm.nameSpace.reg("sys");
                 loginParam.is_aes = -1;
                 $.ajax({
 //                    "url": ctxData + "/system/ajaxlogin?date=" + new Date().getTime() ,
-                    "url": ctxData + "/demo/showDemo?date=" + new Date().getTime() ,
-//                    "data" : loginParam,
+                    "url": ctxData + "/system/ajaxlogin",
+                    "data" : loginParam,
                     "success": function(retData){
-                    	alert(0);
                         // 登录成功
-//                        if (retData.status == "0") {
-//                            if(redirect !== null || redirect != undefined){
-//                                window.location.href = unescape(redirect);
-//                            }else{
-//                                window.location.href = kdm.utils.getServerPath("domain") + "/page/index";
-//                            }
-//                        } else {// 提示信息
+                        if (retData.status == "0") {
+                            if(redirect !== null || redirect != undefined){
+                                window.location.href = unescape(redirect);
+                            }else{
+                                window.location.href = kdm.utils.getServerPath("domain") + "/page/index";
+                            }
+                        } else {// 提示信息
+                        	alert("*"+retData.msg)
 //                            $("#login_msg").html("*"+retData.msg);
 ////                            kdm.win.alert(retData.msg,retData.status);
 //                            obj.getValidateCodeFun();
 //                            $("#validateCode").focus();
 //                            $("#validateCode").select()
-//                        }
+                        }
                     },
                     "error": function(XMLHttpRequest, textStatus, errorThrown){
                     	alert(XMLHttpRequest.status+":"+errorThrown);
                     },
-//                    "dataType": "jsonp",
-//                    "cache": false
+                    "dataType": "json",
+                    "cache": false
                 });
             }, {
                 validate : function() {
@@ -118,7 +118,7 @@ kdm.nameSpace.reg("sys");
                         $(window).scrollTop($("#password").offset().top - 50);
                         return false;
                     }
-                    if (isValidate=='1'&&(validateCode == "" || validateCode == undefined)) {
+                    if (1==2 && isValidate=='1'&&(validateCode == "" || validateCode == undefined)) {
                         $("#validateCode").testRemind("请输入验证码");
                         $("#validateCode").focus();
                         $("#validateCode").select();

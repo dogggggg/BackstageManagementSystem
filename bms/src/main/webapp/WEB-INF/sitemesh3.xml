@@ -5,16 +5,15 @@
 	<mime-type>application/xhtml+xml</mime-type>
 	<mapping path="/page/**/*" decorator="/WEB-INF/layouts/default.jsp" />
 	<mapping>
-	   <path>/page/**/*</path>
-	   <decorator>/WEB-INF/layouts/default.jsp</decorator>
-	   <!--  <decorator>/WEB-INF/layouts/footer.jsp</decorator> -->
+		<path>/page/**/*</path>
+		<decorator>/WEB-INF/layouts/default.jsp</decorator>
 	</mapping>
 	<mapping path="/js*" exclude="true" />
 	<mapping path="/static*" exclude="true" />
 	<mapping path="/page/index" exclude="true" />
 	<mapping path="/page/login" exclude="true" />
 	<content-processor>
-		<tag-rule-bundle class="com.kdm.eip.common.support.ScriptTagRuleBundle" />
+		<tag-rule-bundle class="com.hab.bms.sys.common.sitemesh.ScriptTagRuleBundle" />
 	</content-processor>
 
 </sitemesh> 

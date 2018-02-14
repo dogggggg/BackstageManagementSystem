@@ -25,7 +25,7 @@ public class DemoController {
 		logger.debug("request{}: " + request);
 		logger.debug("model{}: " + model);
 		try {
-			int demoId = Integer.parseInt(request.getParameter("id"));
+			int demoId = Integer.parseInt(request.getParameter("login_id"));
 			Demo demo = this.demoService.getDemoById(demoId);
 			model.addAttribute("demo", demo);
 			return "index";

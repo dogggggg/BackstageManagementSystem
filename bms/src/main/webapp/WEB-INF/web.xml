@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" metadata-complete="true" version="2.5">
+	<!-- 如果是用mvn命令生成的xml，需要修改servlet版本为3.1 -->
+
 	<display-name>BMSApp</display-name>
 	<!-- Spring配置全局文件 -->
 	<context-param>
@@ -12,7 +14,10 @@
 		</param-value>
 	</context-param>
 
-	<!-- 日志过滤器 -->
+	<!-- log4j2-begin -->
+	<listener>
+		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+	</listener>
 	<filter>
 		<filter-name>log4jServletFilter</filter-name>
 		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
@@ -25,22 +30,20 @@
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
-	<!-- 编码过滤器 -->
+	<!-- log4j2-end -->
+
+	<!-- sitemesh-begin -->
 	<filter>
-		<filter-name>encodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<async-supported>true</async-supported>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
+		<filter-name>sitemesh</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!-- sitemesh-end -->
 
-	<!-- shiro过滤器  -->
+	<!-- shiroFilter-begin -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -52,8 +55,8 @@
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+	<!-- shiroFilter-end -->
 
 	<!-- log4j2日志监听器 -->
 	<listener>
@@ -76,20 +79,21 @@
 		<listener-class>com.hab.bms.sys.init.SystemInitListener</listener-class>
 	</listener>
 
-	<!-- Spring MVC servlet -->
+
+	<!-- 配置DispatcherServlet -->
 	<servlet>
-		<servlet-name>dispatcher</servlet-name>
+		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置springMVC需要加载的配置文件 spring-mybatis.xml,spring-service.xml,spring-web.xml 
+			Mybatis - > spring -> springmvc -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:/spring/webmvc-config.xml</param-value>
+			<param-value>classpath:spring/webmvc-config.xml</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<!-- 默认匹配所有的请求 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-</web-app>  
+</web-app>

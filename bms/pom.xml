@@ -2,15 +2,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hab</groupId>
-	<artifactId>bms</artifactId>
-	<version>1.0</version>
+	<artifactId>bms2</artifactId>
+	<version>v1.1.x</version>
 	<packaging>war</packaging>
 
 	<properties>
 		<!-- spring版本号 -->
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<!-- mybatis版本号 -->
-		<mybatis.version>3.2.6</mybatis.version>
+		<mybatis.version>3.2.8</mybatis.version>
 		<mybatis.ehcache.version>1.0.0</mybatis.ehcache.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.7</slf4j.version>
@@ -27,6 +27,7 @@
 		<shiro.version>1.2.3</shiro.version>
 		<ehcache.version>2.4.3</ehcache.version>
 		<shiro.ehcache.version>1.2.4</shiro.ehcache.version>
+		<jackson.version>2.8.1</jackson.version>
 
 
 	</properties>
@@ -35,7 +36,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<!-- 表示开发的时候引入，发布的时候不会加载此包 -->
 			<scope>test</scope>
 		</dependency>
@@ -83,20 +84,20 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-        <!-- start要使用spring的aop,要么引入aspectj,要么cglib -->  
-		<dependency>  
-            <groupId>org.aspectj</groupId>  
-            <artifactId>aspectjweaver</artifactId>  
-            <version>1.6.11</version>  
-            <type>jar</type>  
-            <scope>compile</scope>  
-        </dependency>  
-        <dependency>  
-            <groupId>cglib</groupId>  
-            <artifactId>cglib</artifactId>  
-            <version>3.2.4</version>  
-        </dependency> 
-        <!-- end要使用spring的aop,要么引入aspectj,要么cglib -->   
+		<!-- start要使用spring的aop,要么引入aspectj,要么cglib -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.11</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+		<!-- end要使用spring的aop,要么引入aspectj,要么cglib -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -173,11 +174,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-log4j12</artifactId> -->
+		<!-- <version>${slf4j.version}</version> -->
+		<!-- </dependency> -->
 
 		<!-- Log start -->
 		<!-- log4j2 -->
@@ -217,6 +218,16 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- 上传组件包 start -->
 		<!-- 需要与commons-io配合使用 -->
@@ -300,6 +311,19 @@
 			<version>1.2.2</version>
 		</dependency>
 		<!-- web end -->
+		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
 
 	</dependencies>
 

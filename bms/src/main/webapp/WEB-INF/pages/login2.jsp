@@ -2,10 +2,12 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/include/taglib.jsp"%>
 <html lang="en">
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <title>BMS Login</title>
-<link rel="Shortcut Icon" href="../static/images/logo.png" type="image/x-icon" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -23,13 +25,13 @@
 		<form id="loginForm">
 			<input type="text" id="login_id" name="login_id" class="username" placeholder="Username" value=1> 
 			<input type="password" id="password" name="password" class="password" placeholder="Password" value=1>
- 			<!-- <label class="block clearfix" id="isValidate">
- 				<span class="block input-icon input-icon-right"> 
- 					<input type="text" class="form-control width-60 login-big" id="validateCode" placeholder="验证码" value=1> 
- 						<img id="generateCode" src="" style="width: 90px; height: 35px; float: right; margin-top: -35px; cursor: pointer;">
- 				</span>
- 			</label> -->
-			<button type="button" id="btn_login">Sign me in</button>
+<!--  			<label class="block clearfix" id="isValidate"> -->
+<!--  				<span class="block input-icon input-icon-right">  -->
+<!--  					<input type="text" class="form-control width-60 login-big" id="validateCode" placeholder="验证码" value=1>  -->
+<!--  						<img id="generateCode" src="" style="width: 90px; height: 35px; float: right; margin-top: -35px; cursor: pointer;"> -->
+<!--  				</span> -->
+<!--  			</label> -->
+			<button type="submit" id="btn_login">Sign me in</button>
 			<div class="error">
 				<span>+</span>
 			</div>

@@ -10,30 +10,24 @@
            timeToLiveSeconds="600">
     </cache>
 
-	<!-- 密码输入错误 锁定10分钟 -->  
-    <!-- timeToIdleSeconds:设置对象在失效前的允许闲置时间（单位：秒） -->  
-    <!-- timeToLiveSeconds:设置对象在失效前允许存活时间（单位：秒）。最大时间介于创建时间和失效时间之间。仅当eternal=false对象不是永久有效时使用，默认是0.，也就是对象存活时间无穷大。 --> 
     <cache name="passwordRetryCache"
             eternal="false" maxElementsInMemory="1000"
         overflowToDisk="true" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
     </cache>
  
-    <!-- 权限记录缓存 锁定10分钟 -->  
     <cache name="authorizationCache"
           eternal="false" maxElementsInMemory="1000"
         overflowToDisk="true" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
     </cache>
  
-    <!-- 登录认证记录缓存 锁定10分钟 -->  
     <cache name="authenticationCache"
           eternal="false" maxElementsInMemory="1000"
         overflowToDisk="true" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU">
     </cache>
     
-    <!-- 会话次数缓存 --> 
     <cache name="shiro-activeSessionCache"
           eternal="true" maxElementsInMemory="1000"
         overflowToDisk="true" diskPersistent="false" timeToIdleSeconds="0"

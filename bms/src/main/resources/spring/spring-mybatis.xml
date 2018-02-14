@@ -1,90 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"  
-    xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"  
-    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"  
-    xsi:schemaLocation="http://www.springframework.org/schema/beans       
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd     
-     http://www.springframework.org/schema/mvc  
-    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd   
-     http://www.springframework.org/schema/tx      
-      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd       
-      http://www.springframework.org/schema/aop       
-      http://www.springframework.org/schema/aop/spring-aop-3.0.xsd       
-      http://www.springframework.org/schema/context       
-      http://www.springframework.org/schema/context/spring-context-3.0.xsd">  
-      
-	<!-- application-context.xml（spring管理的相关配置） -->
-	<!-- 自动扫描 -->
-	<context:component-scan base-package="com.hab.bms" />
-	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:jdbc.properties" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 全局数据访问模型 -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 配置整合mybatis过程 -->
+	<!-- 1.配置数据库相关参数properties的属性：${url} -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 2.数据库连接(Alibaba Druid 数据源) -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${bms.mysql.jdbc.url}" />
+		<property name="username" value="${bms.mysql.jdbc.username}" />
+		<property name="password" value="${bms.mysql.jdbc.password}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${bms.mysql.jdbc.initialSize}" />
+		<property name="maxActive" value="${bms.mysql.jdbc.maxActive}" />
+		<property name="minIdle" value="${bms.mysql.jdbc.minIdle}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${bms.mysql.jdbc.maxWait}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${bms.mysql.jdbc.minEvictableIdleTimeMillis}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis"
+			value="${bms.mysql.jdbc.timeBetweenEvictionRunsMillis}" />
+
+		<property name="validationQuery" value="${bms.mysql.jdbc.validationQuery}" />
+		<property name="testWhileIdle" value="${bms.mysql.jdbc.testWhileIdle}" />
+		<property name="testOnBorrow" value="${bms.mysql.jdbc.testOnBorrow}" />
+		<property name="testOnReturn" value="${bms.mysql.jdbc.testOnReturn}" />
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${bms.mysql.jdbc.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="${bms.mysql.jdbc.maxPoolPreparedStatementPerConnectionSize}" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="${bms.mysql.jdbc.filters}" />
+		<!-- 关闭长时间不使用的连接超时时间，单位秒 -->
+		<property name="removeAbandoned" value="${bms.mysql.jdbc.removeAbandoned}" />
+		<property name="removeAbandonedTimeout" value="${bms.mysql.jdbc.removeAbandonedTimeout}" />
+		<!-- <property name="logAbandoned" value="${bms.mysql.jdbc.logAbandoned}" 
+			/> -->
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="${driver}" />
-		<property name="url" value="${url}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
-		<!-- 初始化连接大小 -->
-		<property name="initialSize" value="${initialSize}"></property>
-		<!-- 连接池最大数量 -->
-		<property name="maxActive" value="${maxActive}"></property>
-		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="${maxIdle}"></property>
-		<!-- 连接池最小空闲 -->
-		<property name="minIdle" value="${minIdle}"></property>
-		<!-- 获取连接最大等待时间 -->
-		<property name="maxWait" value="${maxWait}"></property>
+	<!-- jdbc 配置 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="jdbcTemplate"></constructor-arg>
 	</bean>
 
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<!-- 3.配置SqlSessionFactory对象 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 注入数据库连接池 -->
 		<property name="dataSource" ref="dataSource" />
-		<!-- 自动扫描mapping.xml文件 -->
-<!-- 		<property name="mapperLocations" value="classpath*:mybatis/bms/mysqlmapper/**/*.xml" /> -->
-        <property name="mapperLocations">  
-            <list>  
-                <value>classpath*:mybatis/bms/mysqlmapper/**/*.xml</value>  
-            </list>  
-        </property>  
+		<!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
+		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
+		<!-- 扫描entity包 使用别名 -->
+		<property name="typeAliasesPackage" value="com.hab.bms.**.model" />
+		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:mybatis/bms/mysqlmapper/**/*.xml</value>
+			</list>
+		</property>
 	</bean>
 
-	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入sqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 给出需要扫描Dao接口包 -->
 		<property name="basePackage" value="com.hab.bms.**.mysqlmapper" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
-	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<!-- 使用annotation定义数据库事务，这样可以在类或方法中直接使用@Transactional注解来声明事务 -->  
-    <tx:annotation-driven transaction-manager="transactionManager" />  
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">  
-        <tx:attributes>  
-            <tx:method name="save*" propagation="REQUIRED" />  
-            <tx:method name="update*" propagation="REQUIRED" />  
-            <tx:method name="delete*" propagation="REQUIRED" />  
-            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />  
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />  
-            <tx:method name="search*" propagation="SUPPORTS" read-only="true" />  
-            <tx:method name="approve" propagation="REQUIRED" />  
-            <tx:method name="undo" propagation="REQUIRED" />  
-            <tx:method name="*" propagation="SUPPORTS" read-only="true" />  
-        </tx:attributes>  
-    </tx:advice>  
-    <aop:config>  
-        <aop:pointcut id="serviceMethod"  
-            expression="execution(* com.hab.bms.**.service..*.*(..))" />  
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />  
-    </aop:config>  
-    <!-- spring管理：自动搜索注解路径 在xml配置了这个标签后，spring可以自动去扫描base-pack下面或者子包下面的Java文件，如果扫描到有@Component @Controller@Service等这些注解的类，则把这些类注册为bean-->    
-    <context:component-scan base-package="com.hab.bms"></context:component-scan>    
 </beans> 
